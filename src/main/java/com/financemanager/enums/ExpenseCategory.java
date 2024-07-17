@@ -8,8 +8,6 @@ public enum ExpenseCategory implements Category {
   UTILITIES("공과금"),
   HEALTHCARE("의료비"),
   ENTERTAINMENT("여가비"),
-  EDUCATION("교육비"),
-  SAVINGS("저축"),
   OTHER("기타");
 
   private final String displayName;
