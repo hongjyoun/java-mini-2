@@ -6,11 +6,14 @@ import com.financemanager.enums.TransactionType;
 import com.financemanager.models.Category;
 import com.financemanager.models.Transaction;
 import com.financemanager.service.TransactionService;
+import com.financemanager.utils.ExcelSaver;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+import static com.financemanager.utils.ExcelSaver.saveToExcel;
 
 public class CLIManager {
   private int menu = 0;
@@ -18,7 +21,7 @@ public class CLIManager {
 
   TransactionService transactionManager = new TransactionService();
 
-  public void setMenu(int menu) {
+  private void setMenu(int menu) {
     this.menu = menu;
   }
 
@@ -35,6 +38,9 @@ public class CLIManager {
         case 2:
           this.showList();
           break;
+        case 3:
+          this.saveExcel();
+          break;
         default:
           isExit = true;
           break;
@@ -43,20 +49,21 @@ public class CLIManager {
     System.out.println("서비스를 종료합니다.");
   }
 
-  public void infoView(Scanner scanner) {
+  private void infoView(Scanner scanner) {
     while(isExit == false && menu == 0) {
-      System.out.println("메뉴를 선택해주세요 \n1. 입력\n2. 목록보기\n3. 종료하기");
+      System.out.println("메뉴를 선택해주세요 \n1. 입력\n2. 목록보기\n3. 목록을 엑셀로 출력하기\n4. 종료하기");
       String input = scanner.nextLine().trim();
       switch (input) {
         case "1": this.setMenu(1); break;
         case "2": this.setMenu(2); break;
-        case "3": isExit = true; break;
+        case "3": this.setMenu(3); break;
+        case "4": isExit = true; break;
         default: System.out.println("잘못된 메뉴 선택입니다. 다시 시도해주세요."); break;
       }
     }
   }
 
-  public void inputForm(Scanner scanner) {
+  private void inputForm(Scanner scanner) {
     if(isExit == true || menu != 1) return;
 
     TransactionType type = null;
@@ -131,7 +138,7 @@ public class CLIManager {
     setMenu(0);
   }
 
-  public void showList() {
+  private void showList() {
     while(isExit == false && menu == 2) {
       System.out.println("========= 현재까지의 금전내역입니다. =========");
       for(Transaction transaction : transactionManager.getTransactions()) {
@@ -141,6 +148,12 @@ public class CLIManager {
       System.out.println();
       setMenu(0);
     }
+  }
+
+  private void saveExcel() {
+    ExcelSaver excelSaver = new ExcelSaver();
+    excelSaver.saveToExcel(transactionManager.getTransactions());
+    setMenu(0);
   }
 
 
