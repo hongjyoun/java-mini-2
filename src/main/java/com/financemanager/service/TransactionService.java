@@ -1,11 +1,11 @@
-package com.financemanager;
+package com.financemanager.service;
 
 import com.financemanager.models.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionManager {
+public class TransactionService {
   List<Transaction> transactions = new ArrayList<>();
 
   public void addTransaction(Transaction transaction) {

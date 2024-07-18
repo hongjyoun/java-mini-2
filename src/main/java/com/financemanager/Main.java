@@ -6,11 +6,11 @@ public class Main {
   public static void main(String[] args) {
 
     Scanner scanner = new Scanner(System.in);
-    ConsoleManager consoleManager = new ConsoleManager();
+    CLIManager cliManager = new CLIManager();
 
     System.out.println("=========================================================");
 
-    consoleManager.consoleController(scanner);
+    cliManager.consoleController(scanner);
 
     System.out.println("=========================================================");
     scanner.close();
