@@ -13,8 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-import static com.financemanager.utils.ExcelSaver.saveToExcel;
-
 public class CLIManager {
   private int menu = 0;
   boolean isExit = false;
@@ -27,7 +25,7 @@ public class CLIManager {
 
   public void consoleController(Scanner scanner) {
     
-    while(isExit == false) {
+    while(!isExit) {
       switch(menu) {
         case 0:
           this.infoView(scanner);
@@ -50,7 +48,7 @@ public class CLIManager {
   }
 
   private void infoView(Scanner scanner) {
-    while(isExit == false && menu == 0) {
+    while(!isExit && menu == 0) {
       System.out.println("메뉴를 선택해주세요 \n1. 입력\n2. 목록보기\n3. 목록을 엑셀로 출력하기\n4. 종료하기");
       String input = scanner.nextLine().trim();
       switch (input) {
@@ -64,7 +62,7 @@ public class CLIManager {
   }
 
   private void inputForm(Scanner scanner) {
-    if(isExit == true || menu != 1) return;
+    if(isExit || menu != 1) return;
 
     TransactionType type = null;
     Category category = null;
@@ -114,7 +112,7 @@ public class CLIManager {
         } catch (NumberFormatException e) {
           System.out.println("잘못된 거래유형입니다. 다시 입력해주세요.\n");
         }
-      } else if (date == null) {
+      } else {
         System.out.println("날짜를 입력해주세요 ex) 2024-01-01");
         String input = scanner.nextLine().trim();
         try {
@@ -139,7 +137,7 @@ public class CLIManager {
   }
 
   private void showList() {
-    while(isExit == false && menu == 2) {
+    while(!isExit && menu == 2) {
       System.out.println("========= 현재까지의 금전내역입니다. =========");
       for(Transaction transaction : transactionManager.getTransactions()) {
         System.out.println(transaction);
